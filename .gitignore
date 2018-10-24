@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+godoc2anki
 
 # Test binary, build with `go test -c`
 *.test
