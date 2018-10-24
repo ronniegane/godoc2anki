@@ -11,3 +11,6 @@ godoc2anki
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Test output
+test.csv
