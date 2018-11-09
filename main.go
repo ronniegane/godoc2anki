@@ -16,11 +16,14 @@ var pkgName *string
 
 func main() {
 	pkgName = flag.String("u", "net", "The package you wish to parse")
-	outFilename := flag.String("o", "test.csv", "The file to output to")
+	outFilename := flag.String("o", "", "The file to output to")
 
 	flag.Parse()
 
 	docURL := "https://golang.org/pkg/" + *pkgName
+	if *outFilename == "" {
+		*outFilename = *pkgName + ".csv"
+	}
 
 	// Make an HTTP request to get the page
 	resp, err := http.Get(docURL)
