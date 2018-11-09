@@ -12,16 +12,20 @@ import (
 	"golang.org/x/net/html"
 )
 
+var pkgName *string
+
 func main() {
-	docURL := flag.String("u", "https://golang.org/pkg/compress", "The URL of the Godoc you wish to parse")
+	pkgName = flag.String("u", "net", "The package you wish to parse")
 	outFilename := flag.String("o", "test.csv", "The file to output to")
 
 	flag.Parse()
 
+	docURL := "https://golang.org/pkg/" + *pkgName
+
 	// Make an HTTP request to get the page
-	resp, err := http.Get(*docURL)
+	resp, err := http.Get(docURL)
 	if err != nil {
-		fmt.Println("An error occurred trying to reach", *docURL)
+		fmt.Println("An error occurred trying to reach", docURL)
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -116,7 +120,7 @@ func nodeToCard(n *html.Node) Card {
 	synopsis := strings.TrimSpace(n.NextSibling.NextSibling.FirstChild.Data)
 	name := n.FirstChild.NextSibling.FirstChild.Data
 	return Card{
-		q: name,
+		q: *pkgName + "/" + name,
 		a: synopsis,
 	}
 }
